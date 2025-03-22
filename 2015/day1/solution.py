@@ -1,5 +1,3 @@
-import os
-
 
 def get_floor(x: str) -> int:
     ob = x.count("(")
