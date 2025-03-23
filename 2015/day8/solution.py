@@ -28,6 +28,25 @@ def calculate_discrepancy(unconverted_string: str) -> int:
     return (len(unconverted_string) - len(converted_string)) + 2
 
 
+def encode_longer(unencoded: str) -> int:
+    encoded = ""
+    for i, char in enumerate(unencoded):
+        if char == '"':
+            encoded += '\\"'
+        elif char == '\\':
+            encoded += char + char
+        else:
+            encoded += char
+    return len(encoded) + 2 - len(unencoded)
+
+
+def encode_all(unconverted_strings: list) -> int:
+    num_added_chars = 0
+    for unconverted in unconverted_strings:
+        num_added_chars += encode_longer(unconverted)
+    return num_added_chars
+
+
 def calculate_all(unconverted_strings: list) -> int:
     number_discrepancy = 0
     for unconverted_string in unconverted_strings:
@@ -40,4 +59,4 @@ if __name__ == '__main__':
     print("solution: ", calculate_all(puzzle_input))
 
     print("Part2: ")
-    print("solution: ", )
+    print("solution: ", encode_all(puzzle_input))
