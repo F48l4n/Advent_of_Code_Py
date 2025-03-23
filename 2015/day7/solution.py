@@ -36,8 +36,6 @@ class Machine:
 
 if __name__ == '__main__':
 
-    print("All test passed")
-
     puzzle_input = open("input.txt", "r").read().splitlines()
     machine = Machine()
     machine.parse_commands(puzzle_input)
