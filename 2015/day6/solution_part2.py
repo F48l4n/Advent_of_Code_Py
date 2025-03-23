@@ -34,16 +34,16 @@ class Grid:
 
 class Light:
     def __init__(self):
-        self.lit = False
+        self.lit = 0
 
     def toggle(self):
-        self.lit = not self.lit
+        self.lit += 2
 
     def turn_on(self):
-        self.lit = True
+        self.lit += 1
 
     def turn_off(self):
-        self.lit = False
+        self.lit = max(self.lit - 1, 0)
 
     def is_on(self):
         return self.lit
@@ -85,7 +85,7 @@ def run_all_instructions_print_on(instructions: list) -> int:
 if __name__ == '__main__':
     assert run_all_instructions_print_on(["turn on 0,0 through 999,999"]) == 1000000, \
         "Error: Example 1 couldn't be solved"
-    assert run_all_instructions_print_on(["toggle 0,0 through 999,0"]) == 1000, \
+    assert run_all_instructions_print_on(["toggle 0,0 through 999,0"]) == 2000, \
         "Error: Example 2 couldn't be solved"
     assert run_all_instructions_print_on(["turn on 0,0 through 999,999", "turn off 499,499 through 500,500"]) == 1000000-4, \
         "Error: Example 3 couldn't be solved"
