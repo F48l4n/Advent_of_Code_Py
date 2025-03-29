@@ -7,6 +7,7 @@ class Reindeer:
         self.currently_sprinting = True
         self.current_duration = sprint_duration
         self.distance = 0
+        self.points = 0
 
     def step(self) -> None:
         if self.currently_sprinting and self.current_duration >= 1:
@@ -24,6 +25,12 @@ class Reindeer:
 
     def get_distance(self) -> int:
         return self.distance
+
+    def add_point(self) -> None:
+        self.points += 1
+
+    def get_points(self) -> int:
+        return self.points
 
 
 class Race:
@@ -43,17 +50,37 @@ class Race:
 
             self.reindeers.append(Reindeer(name, speed, sprint_duration, rest_duration))
 
-    def run_race(self, ticks) -> int:
+    def run_race(self, ticks) -> None:
         for i in range(ticks):
             for reindeer in self.reindeers:
                 reindeer.step()
 
+            current_leads, lead_distance = list(), 0
+            for reindeer in self.reindeers:
+                distance = reindeer.get_distance()
+                if distance > lead_distance:
+                    current_leads = [reindeer]
+                    lead_distance = distance
+                elif distance == lead_distance:
+                    current_leads.append(reindeer)
+            for lead in current_leads:
+                lead.add_point()
+
+    def get_max_distance(self) -> int:
         max_distance = 0
         for reindeer in self.reindeers:
             distance = reindeer.get_distance()
             if distance > max_distance:
                 max_distance = distance
         return max_distance
+
+    def get_max_points(self) -> int:
+        max_points = 0
+        for reindeer in self.reindeers:
+            points = reindeer.get_points()
+            if points > max_points:
+                max_points = points
+        return max_points
 
 
 if __name__ == '__main__':
@@ -63,13 +90,16 @@ if __name__ == '__main__':
     ]
     test_race = Race()
     test_race.load_reindeers(test_input)
-    assert test_race.run_race(1000) == 1120, "Error, Example couldn't compute"
+    test_race.run_race(1000)
+    assert test_race.get_max_distance() == 1120, "Error, Example couldn't compute"
+    assert test_race.get_max_points() == 689, "Error, Example 2 couldn't compute"
     print("All test passed")
 
     puzzle_input = open("input.txt", "r").read().splitlines()
     race = Race()
     race.load_reindeers(puzzle_input)
-    print("solution: ", race.run_race(2503))
+    race.run_race(2503)
+    print("solution: ", race.get_max_distance())
 
     print("Part2: ")
-    print("solution: ", )
+    print("solution: ", race.get_max_points())
