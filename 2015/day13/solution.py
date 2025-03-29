@@ -75,6 +75,6 @@ if __name__ == '__main__':
 
     puzzle_input += open("self_input.txt", "r").read().splitlines()
     converted_input = load_puzzle_input(puzzle_input)
-    print(converted_input)
-    print("Part2: ", get_perfect_seating(converted_input))
-    print("solution: ", )
+    print("Part2: ")
+    print("solution: ", get_perfect_seating(converted_input))
+
