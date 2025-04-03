@@ -10,7 +10,7 @@ class Cell:
 
 
 class Grid:
-    def __init__(self, part2:bool = False) -> None:
+    def __init__(self, part2: bool = False) -> None:
         self.grid: list[list[Cell]] = []
         self.part2 = part2
 
@@ -27,7 +27,7 @@ class Grid:
 
     def run_tick(self):
         new_grid = self.grid.copy()
-        neighbour_grid = [[0 for j in range(len(new_grid[0]))] for i in range(len(new_grid))]
+        neighbour_grid = [[0 for _ in range(len(new_grid[0]))] for _ in range(len(new_grid))]
         for row in range(len(new_grid)):
             for col in range(len(new_grid[row])):
                 neighbour_grid[row][col] = self.get_neighbours(row, col)
@@ -40,7 +40,7 @@ class Grid:
                     new_grid[row_index][col_index].dark()
         self.grid = new_grid
 
-    def tick_n_times(self, n: int, debug:bool = False):
+    def tick_n_times(self, n: int, debug: bool = False):
         for _ in range(n):
             self.run_tick()
             if debug:
@@ -50,7 +50,9 @@ class Grid:
         neighbours: list[Cell] = []
         for _row in range(row - 1, row + 2):
             for _col in range(col - 1, col + 2):
-                if self.part2 and ((_row , _col) == (0,0) or  (_row , _col) == (0,len(self.grid[0])-1) or (_row , _col) == (len(self.grid)-1,0) or (_row , _col) == (len(self.grid)-1,len(self.grid[0])-1)):
+                if self.part2 and (
+                        (_row, _col) == (0, 0) or (_row, _col) == (0, len(self.grid[0]) - 1) or (_row, _col) == (
+                        len(self.grid) - 1, 0) or (_row, _col) == (len(self.grid) - 1, len(self.grid[0]) - 1)):
                     if _row == row and _col == col:
                         return 3
                     neighbours.append(Cell(True))
@@ -100,14 +102,14 @@ if __name__ == '__main__':
     grid.tick_n_times(4)
     assert grid.return_number_lit() == 4, "Error: Example failed"
     test_input_2 = [["#", "#", ".", "#", ".", "#"],
-                  [".", ".", ".", "#", "#", "."],
-                  ["#", ".", ".", ".", ".", "#"],
-                  [".", ".", "#", ".", ".", "."],
-                  ["#", ".", "#", ".", ".", "#"],
-                  ["#", "#", "#", "#", ".", "#"]]
+                    [".", ".", ".", "#", "#", "."],
+                    ["#", ".", ".", ".", ".", "#"],
+                    [".", ".", "#", ".", ".", "."],
+                    ["#", ".", "#", ".", ".", "#"],
+                    ["#", "#", "#", "#", ".", "#"]]
     grid = Grid(part2=True)
     grid.load(test_input_2)
-    grid.tick_n_times(5, debug=True)
+    grid.tick_n_times(5)
     assert grid.return_number_lit() == 17, "Error: Example 2 failed"
     print("All test passed")
 
