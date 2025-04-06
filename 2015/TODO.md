@@ -1,1 +1,1 @@
-[ ] - day 19 part 2
+- [ ] day 19 part 2 own solution
